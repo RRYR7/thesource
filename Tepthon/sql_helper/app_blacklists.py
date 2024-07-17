@@ -3,7 +3,7 @@ from sqlalchemy import Column, String, UnicodeText
 from . import BASE, SESSION
 
 
-class Bot_BlackList(BASE):
+class App_BlackList(BASE):
     __tablename__ = "app_blacklist"
     chat_id = Column(String(14), primary_key=True)
     first_name = Column(UnicodeText)
@@ -46,7 +46,7 @@ def add_user_to_bl(
 def check_is_black_list(chat_id: int):
     """check if user_id is blacklisted"""
     try:
-        return SESSION.query(Bot_BlackList).get(str(chat_id))
+        return SESSION.query(App_BlackList).get(str(chat_id))
     finally:
         SESSION.close()
 
