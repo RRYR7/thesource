@@ -3,7 +3,7 @@ from sqlalchemy import Column, String, UnicodeText
 from . import BASE, SESSION
 
 
-class Bot_Starters(BASE):
+class App_Starters(BASE):
     __tablename__ = "app_starters"
     user_id = Column(String(14), primary_key=True)
     first_name = Column(UnicodeText)
@@ -28,7 +28,7 @@ def add_starter_to_db(
 ):
     to_check = get_starter_details(user_id)
     if not to_check:
-        user = Bot_Starters(str(user_id), first_name, date, username)
+        user = App_Starters(str(user_id), first_name, date, username)
         SESSION.add(user)
         SESSION.commit()
         return True
