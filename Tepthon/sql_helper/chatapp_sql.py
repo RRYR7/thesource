@@ -3,7 +3,7 @@ from sqlalchemy import Column, String, UnicodeText
 from . import BASE, SESSION
 
 
-class ChatBot(BASE):
+class ChatApp(BASE):
     __tablename__ = "chatapp"
     chat_id = Column(String(14), primary_key=True)
     user_id = Column(String(14), primary_key=True, nullable=False)
@@ -44,7 +44,7 @@ def is_added(chat_id, user_id):
 
 def get_users(chat_id):
     try:
-        return SESSION.query(ChatApp).filter(ChatBot.chat_id == str(chat_id)).all()
+        return SESSION.query(ChatApp).filter(ChatApp.chat_id == str(chat_id)).all()
     finally:
         SESSION.close()
 
@@ -61,7 +61,7 @@ def get_all_users():
 def addai(chat_id, user_id, chat_name, user_name, user_username, chat_type):
     to_check = is_added(chat_id, user_id)
     if not to_check:
-        adder = ChatBot(
+        adder = ChatApp(
             str(chat_id), str(user_id), chat_name, user_name, user_username, chat_type
         )
         SESSION.add(adder)
@@ -89,7 +89,7 @@ def remove_ai(chat_id, user_id):
 
 
 def remove_users(chat_id):
-    if saved_filter := SESSION.query(ChatApp).filter(ChatBot.chat_id == str(chat_id)):
+    if saved_filter := SESSION.query(ChatApp).filter(ChatApp.chat_id == str(chat_id)):
         saved_filter.delete()
         SESSION.commit()
 
